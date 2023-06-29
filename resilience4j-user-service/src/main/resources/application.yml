@@ -17,3 +17,9 @@ resilience4j:  circuitbreaker:    instances:      userService:
          retry:    instances:      userService:
         max-retry-attempts: 5
         wait-duration: 10s
+  
+  ratelimiter:    instances:      userService:
+        register-health-indicator: false
+        limit-for-period: 10
+        limit-refresh-period: 10s
+        timeout-duration: 3s

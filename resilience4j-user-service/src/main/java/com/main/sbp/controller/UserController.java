@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import com.main.sbp.dto.OrderDTO;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
@@ -39,10 +40,11 @@ public class UserController {
     
     @GetMapping("/displayOrders")
 //    @CircuitBreaker(name =USER_SERVICE, fallbackMethod = "getAllAvailableProducts")
-    @Retry(name =USER_SERVICE, fallbackMethod = "getAllAvailableProducts")
+//    @Retry(name =USER_SERVICE, fallbackMethod = "getAllAvailableProducts")
+    @RateLimiter(name =USER_SERVICE, fallbackMethod = "getAllAvailableProducts")
     public List<OrderDTO> displayOrders(@RequestParam("category") String category) {
         String url = category == null ? BASEURL : BASEURL + "/" + category;
-        log.info("retry method called "+attempt++ +" times "+" at "+new Date());
+//        log.info("retry method called "+attempt++ +" times "+" at "+new Date());
         return restTemplate.getForObject(url, ArrayList.class);
     }
     
