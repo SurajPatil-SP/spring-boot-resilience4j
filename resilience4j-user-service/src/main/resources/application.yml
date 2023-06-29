@@ -14,3 +14,6 @@ resilience4j:  circuitbreaker:    instances:      userService:
        permitted-number-of-calls-in-half-open-state: 3
        sliding-window-size: 10
        sliding-window-type: count-based
+         retry:    instances:      userService:
+        max-retry-attempts: 5
+        wait-duration: 10s
